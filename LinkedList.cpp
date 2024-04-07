@@ -72,6 +72,36 @@ public:
         newNode->next = Head;
         Head = newNode;
     }
+    // insert In order
+    void insertByOrder(int order, int data){
+        if(order < 0  || order > sz){
+            cout << "Out of Bound\n";
+            return;
+        }
+        Node* newNode = new Node(data);
+        if(Head == NULL) {
+            Head = newNode;
+            sz++;
+            return;
+        }
+        if(order == 0){
+            insertFront(data);
+            return;
+        }
+        if(order == sz){
+            insertBack(data);
+            return;
+        }
+        int cnt = 0;
+        Node* copyHead = Head;
+        while (cnt + 1 < order) {
+            copyHead = copyHead->next;
+            cnt++;
+        }
+        newNode->next = copyHead->next;
+        copyHead->next = newNode;
+        sz++;
+    }
     void removeBack(){
         if(isEmpty()){
             cout << "No nodes to remove\n";
@@ -196,6 +226,15 @@ int main(){
     list.print();
     cout << "Size: " << list.getSize() << '\n';
     list.removeByoreder(3);
+    list.print();
+    cout << "Size: " << list.getSize() << '\n';
+    list.insertByOrder(0, 14);
+    list.print();
+    cout << "Size: " << list.getSize() << '\n';
+    list.insertByOrder(5, 6);
+    list.print();
+    cout << "Size: " << list.getSize() << '\n';
+    list.insertByOrder(2,8);
     list.print();
     cout << "Size: " << list.getSize() << '\n';
     return 0;
